@@ -23,10 +23,11 @@ export default function Cars() {
       setCars(response?.data?.cars.splice(0, 4));
     } catch (error) {
       console.log("Error fetching data:", error);
-    } finally{
+    } finally {
       setIsLoading(false);
     }
   };
+  
   useEffect(() => {
     getCars();
   }, []);
@@ -41,19 +42,6 @@ export default function Cars() {
   return (
     <>
       <section className="my-3">
-        <div className="input-group mb-3 shadow w-75 mx-auto">
-          <span className="input-group-text" id="basic-addon1">
-            <i class="fa-solid fa-location-dot"></i>
-          </span>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search by name"
-            aria-label="Username"
-            aria-describedby="basic-addon1"
-          />
-          <button className={`btn ${carStyle.bgCars}`}>Search</button>
-        </div>
         {isLoading && <p>Loading...</p>}
         <div className="text-center">
           <button className="btn btnWork">POPULAR RENTAL DEALS</button>
@@ -69,7 +57,7 @@ export default function Cars() {
                 <div className="col-md-3">
                   <div className="shadow p-2">
                     <div className="card-body">
-                    <img
+                      <img
                         src={carImges[index].src}
                         className="card-img-top"
                         alt="car"
@@ -111,7 +99,10 @@ export default function Cars() {
                           /day
                         </p>
                       </div>
-                      <Link to={"/carDetails"} className="btn btn-primary w-100">
+                      <Link
+                        to={"/carDetails"}
+                        className="btn btn-primary w-100"
+                      >
                         Rent Now <img src={arrowRight} alt="arrowRight" />
                       </Link>
                     </div>

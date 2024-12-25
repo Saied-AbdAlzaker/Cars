@@ -15,13 +15,14 @@ import { NavLink, Link } from "react-router-dom";
 export default function AllCars() {
   let [car, setCars] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  let [inputSearch, setInputSearch] = useState([]);
 
   async function getCars() {
     try {
       setIsLoading(true);
       let { data } = await axios.get("https://myfakeapi.com/api/cars");
       setCars(data?.cars.splice(0, 20));
-      console.log(data?.cars);
+      setInputSearch(data?.cars.splice(0, 20));
     } catch (error) {
       console.log("Error fetching data:", error);
     } finally {
@@ -54,6 +55,14 @@ export default function AllCars() {
     { src: car2, alt: "car2" },
     { src: car3, alt: "car3" },
   ];
+
+  // search
+  let handleChange = (event) => {
+    setInputSearch(
+      car.filter((c) => c.car.toLowerCase().includes(event?.target.value))
+    );
+  };
+
   return (
     <>
       <section className="my-3">
@@ -70,6 +79,7 @@ export default function AllCars() {
             <i class="fa-solid fa-location-dot"></i>
           </span>
           <input
+            onChange={handleChange}
             type="text"
             className="form-control"
             placeholder="Search by name"
@@ -86,7 +96,7 @@ export default function AllCars() {
         {isLoading && <p className="text-center">Loading...</p>}
         <div className="container">
           <div className="row g-3">
-            {car.map((car, index) => (
+            {inputSearch.map((car, index) => (
               <div className="col-md-3" key={index}>
                 <div className="shadow p-2">
                   <div className="card-body">
